@@ -30,7 +30,7 @@ export default (async function fetchData(spreadsheetId: string, credentials: obj
       const rows = await promisify(worksheet.getRows)({});
       return {
         [worksheet.title]: cleanRows(guessColumnsDataTypes(rows), rows).map(row =>
-          Object.assign({ id: uuidv5(row.id, uuidv5('gsheet', seedConstant)) }),
+          Object.assign(row, { id: uuidv5(row.id, uuidv5('gsheet', seedConstant)) }),
         ),
       };
     }),
