@@ -1,25 +1,26 @@
-"use strict";
+const uuidv5 = require('uuid/v5');
+const { camelCase } = require('lodash');
+const crypto = require('crypto');
+const fetchSheet = require('./lib/fetchSheet.js').default;
 
-const fetchSheet = require(`./fetch-sheet.js`).default;
-const uuidv5 = require("uuid/v5");
-const _ = require("lodash");
-const crypto = require("crypto");
-const seedConstant = "2972963f-2fcf-4567-9237-c09a2b436541";
+const seedConstant = '2972963f-2fcf-4567-9237-c09a2b436541';
 
-exports.sourceNodes = async ({ boundActionCreators, getNode, store, cache }, { spreadsheetId, worksheetTitle, credentials }) => {
-  const { createNode } = boundActionCreators;
-  console.log("FETCHING SHEET", fetchSheet);
-  let rows = await fetchSheet(spreadsheetId, worksheetTitle, credentials);
-
-  rows.forEach(r => {
-    createNode(Object.assign(r, {
-      id: uuidv5(r.id, uuidv5("gsheet", seedConstant)),
-      parent: "__SOURCE__",
+exports.sourceNodes = async ({ actions }, { spreadsheetId, credentials }) => {
+  const { createNode } = actions;
+  console.log('Fetching Google Sheet', fetchSheet, spreadsheetId);
+  const sheets = await fetchSheet(spreadsheetId, credentials);
+  createNode(
+    Object.assign(sheets, {
+      id: uuidv5(spreadsheetId, uuidv5('gsheet', seedConstant)),
+      parent: '__SOURCE__',
       children: [],
       internal: {
-        type: _.camelCase(`googleSheet ${worksheetTitle} row`),
-        contentDigest: crypto.createHash("md5").update(JSON.stringify(r)).digest("hex")
-      }
-    }));
-  });
+        type: camelCase('googleSheet'),
+        contentDigest: crypto
+          .createHash('md5')
+          .update(JSON.stringify(sheets))
+          .digest('hex'),
+      },
+    }),
+  );
 };
