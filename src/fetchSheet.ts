@@ -9,20 +9,22 @@ export const seedConstant = '2972963f-2fcf-4567-9237-c09a2b436541';
 
 async function getSpreadsheet(
   spreadsheetId: string,
-  credentials: object,
+  credentials?: object,
 ): Promise<GoogleSpreadsheet> {
   const doc = new GoogleSpreadsheet(spreadsheetId);
-  await new Promise((resolve, reject) => {
-    doc.useServiceAccountAuth(credentials, (err: Error) => {
-      if (err) reject(err);
-      resolve();
+  if (credentials) {
+    await new Promise((resolve, reject) => {
+      doc.useServiceAccountAuth(credentials, (err: Error) => {
+        if (err) reject(err);
+        resolve();
+      });
     });
-  });
+  }
   doc.getInfo = promisify(doc.getInfo);
   return doc;
 }
 
-export default (async function fetchData(spreadsheetId: string, credentials: object) {
+export default (async function fetchData(spreadsheetId: string, credentials?: object) {
   const spreadsheet = await getSpreadsheet(spreadsheetId, credentials);
   const { worksheets }: { worksheets: SpreadsheetWorksheet[] } = await spreadsheet.getInfo();
   const sheets: { [title: string]: object }[] = await Promise.all(

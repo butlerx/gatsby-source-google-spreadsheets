@@ -2,7 +2,7 @@
 
 Forked from
 [brandonmp/gatsby-source-google-sheets](https://github.com/brandonmp/gatsby-source-google-sheets) to
-allow pulling the entire sheet as an objects
+allow pulling the entire sheet as an objects and using public sheets
 
 Why go through the hassle of setting up a complicated headless CMS when Google Sheets already has
 user permissions, revision history, and a powerful UI?
@@ -20,6 +20,14 @@ worksheet into a GraphQL type for build-time consumption.
 1. Open your google sheet, click "File > Share..." and enter your service account's e-mail address
    (you can find it in the credentials file).
 
+Or If you wish to work with a Google Spreadsheet without authenticating, not only must the
+Spreadsheet in question be visible to the web, but it must also have been explicitly published.
+
+1. Open your google sheet, Click "File > Publish to the web" and Share entire sheet or specific
+   worksheets.
+1. Click "File > Share" and click "Get Shareable Link", the link should look like
+   `https://docs.google.com/spreadsheets/d/$SPREADSHEET_ID/edit?usp=sharing`
+
 ## Step 2: configure your gatsby project
 
 Standard source plugin installation.
@@ -34,7 +42,7 @@ yarn add gatsby-source-google-sheets
     resolve: 'gatsby-source-google-spreadsheets',
     options: {
         spreadsheetId: 'get this from the sheet url',
-        credentials: require('./path-to-credentials-file.json')
+        credentials: require('./path-to-credentials-file.json') // This is only needed if you are not using published sheets
     }
 },
 // ...
