@@ -1,4 +1,7 @@
-import GoogleSpreadsheet, { SpreadsheetRow, SpreadsheetWorksheet } from 'google-spreadsheet';
+import GoogleSpreadsheet, {
+  SpreadsheetRow,
+  SpreadsheetWorksheet,
+} from 'google-spreadsheet';
 import uuidv5 from 'uuid/v5';
 import { promisify } from 'util';
 import { ColumnTypes } from './columnTypes.d';
@@ -24,15 +27,25 @@ async function getSpreadsheet(
   return doc;
 }
 
-export default (async function fetchData(spreadsheetId: string, credentials?: object) {
+export default (async function fetchData(
+  spreadsheetId: string,
+  credentials?: object,
+) {
   const spreadsheet = await getSpreadsheet(spreadsheetId, credentials);
-  const { worksheets }: { worksheets: SpreadsheetWorksheet[] } = await spreadsheet.getInfo();
+  const {
+    worksheets,
+  }: { worksheets: SpreadsheetWorksheet[] } = await spreadsheet.getInfo();
   const sheets: { [title: string]: object }[] = await Promise.all(
     worksheets.map(async worksheet => {
       const rows = await promisify(worksheet.getRows)({});
       return {
-        [worksheet.title]: cleanRows(guessColumnsDataTypes(rows), rows).map(row =>
-          Object.assign(row, { id: uuidv5(row.id, uuidv5('gsheet', seedConstant)) }),
+        [worksheet.title]: cleanRows(
+          guessColumnsDataTypes(rows),
+          rows,
+        ).map(row =>
+          Object.assign(row, {
+            id: uuidv5(row.id, uuidv5('gsheet', seedConstant)),
+          }),
         ),
       };
     }),

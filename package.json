@@ -5,8 +5,8 @@
   "main": "index.js",
   "scripts": {
     "build": "tsc --build tsconfig.json",
-    "prepublish": "npm run prettify && cross-env NODE_ENV=production npm run build",
-    "prettify": "prettier ./src/** --write",
+    "prepublish": "prettier ./src/** --write && jest && cross-env NODE_ENV=production tsc --build tsconfig.json",
+    "format": "prettier ./src/** --write",
     "test": "jest"
   },
   "author": "Cian Butler <butlerx@notthe.cloud>",
@@ -45,7 +45,7 @@
     "typescript": "^3.7.4"
   },
   "prettier": {
-    "printWidth": 100,
+    "printWidth": 80,
     "singleQuote": true,
     "trailingComma": "all",
     "proseWrap": "always",

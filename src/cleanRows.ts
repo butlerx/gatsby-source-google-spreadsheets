@@ -3,7 +3,10 @@ import { camelCase } from './camelCase';
 import { ColumnTypes } from './columnTypes.d';
 import { filter } from './filter';
 
-export const cleanRows = (columnTypes: ColumnTypes, rows: SpreadsheetRow[]): SpreadsheetRow[] =>
+export const cleanRows = (
+  columnTypes: ColumnTypes,
+  rows: SpreadsheetRow[],
+): SpreadsheetRow[] =>
   rows.map(row =>
     Object.entries(row)
       .filter(([columnName]) => !filter.includes(columnName))

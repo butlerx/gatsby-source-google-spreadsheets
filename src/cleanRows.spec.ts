@@ -88,7 +88,11 @@ describe('cleaning rows from GSheets response', () => {
     const columnTypes = guessColumnsDataTypes(rows);
     const cleaned = cleanRows(columnTypes, rows);
     expect(cleaned.map(row => row.number)).toEqual([0, 1, 2]);
-    expect(cleaned.map(row => row.string)).toEqual(['something', 'anything', 'nothing']);
+    expect(cleaned.map(row => row.string)).toEqual([
+      'something',
+      'anything',
+      'nothing',
+    ]);
     expect(cleaned.map(row => row.null)).toEqual([null, null, null]);
     expect(cleaned.map(row => row.boolean)).toEqual([true, false, false]);
   });

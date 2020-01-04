@@ -18,7 +18,10 @@ const rowTypes = (row: SpreadsheetRow): ColumnTypes =>
     .map(obj => ({ [camelCase(obj[0])]: checkType(obj[1]) }))
     .reduce((row, cell) => Object.assign(row, cell), {});
 
-function flattenRowTypes(columnTypes: ColumnTypes, row: ColumnTypes): ColumnTypes {
+function flattenRowTypes(
+  columnTypes: ColumnTypes,
+  row: ColumnTypes,
+): ColumnTypes {
   Object.entries(row).forEach(([columnName, columnType]: string[]) => {
     // skip nulls, they should have no effect
     if (columnType === 'null') return;
