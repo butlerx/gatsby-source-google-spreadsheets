@@ -39,13 +39,11 @@ export default (async function fetchData(
     worksheets.map(async worksheet => {
       const rows = await promisify(worksheet.getRows)({});
       return {
-        [worksheet.title]: cleanRows(
-          guessColumnsDataTypes(rows),
-          rows,
-        ).map(row =>
-          Object.assign(row, {
-            id: uuidv5(row.id, uuidv5('gsheet', seedConstant)),
-          }),
+        [worksheet.title]: cleanRows(guessColumnsDataTypes(rows), rows).map(
+          row =>
+            Object.assign(row, {
+              id: uuidv5(row.id, uuidv5('gsheet', seedConstant)),
+            }),
         ),
       };
     }),
