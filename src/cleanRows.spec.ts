@@ -28,6 +28,14 @@ describe('cleaning rows from GSheets response', () => {
     expect(cleaned.falsy).toBe(false);
   });
 
+  it('converts empty cells into actual null', () => {
+    const row = { empty: '', nulled: null };
+    const columnTypes = guessColumnsDataTypes([row]);
+    const cleaned = cleanRows(columnTypes, [row])[0];
+    expect(cleaned.empty).toBe(null);
+    expect(cleaned.nulled).toBe(null);
+  });
+
   it('respects emoji', () => {
     const TEST_EMOJI_STRING = '🔑🔑🔑🔑🔑🔑🔑🔑🔑🔑🔑🔑🔑';
     const row = { emoji: TEST_EMOJI_STRING };

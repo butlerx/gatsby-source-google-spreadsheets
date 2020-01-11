@@ -21,9 +21,9 @@ function convertCell(columnTypes: ColumnTypes, key: string, val: any): any {
     case 'number':
       return Number(val.replace(/,/g, ''));
     case 'boolean':
-      // when column contains null we return null, otherwise check boolean value
+      // when column contains null we return false, otherwise check boolean value
       return val === null ? false : val === 'TRUE';
     default:
-      return val;
+      return val === '' ? null : val;
   }
 }
