@@ -127,7 +127,7 @@ A few notes:
 
 - Website: https://cianbutler.ie
 - Twitter: [@cianbutlerx](https://twitter.com/cianbutlerx)
-- Github: [@butlerc](https://github.com/butlerc)
+- Github: [@butlerx](https://github.com/butlerx)
 
 ## 🤝 Contributing
 
