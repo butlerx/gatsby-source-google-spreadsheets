@@ -1,7 +1,7 @@
 import { SpreadsheetRow } from 'google-spreadsheet';
-import { ColumnTypes } from './columnTypes.d';
-import { camelCase } from './camelCase';
-import { filter } from './filter';
+import { ColumnTypes } from '../shared/columnTypes.d';
+import { camelCase } from './shared/camelCase';
+import { filter } from './shared/filter';
 
 const checkType = (val: any): string => {
   // try to determine type based on the cell value

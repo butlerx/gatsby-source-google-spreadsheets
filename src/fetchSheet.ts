@@ -4,9 +4,9 @@ import GoogleSpreadsheet, {
 } from 'google-spreadsheet';
 import uuidv5 from 'uuid/v5';
 import { promisify } from 'util';
-import { ColumnTypes } from './columnTypes.d';
-import { guessColumnsDataTypes } from './columnsDataTypes';
-import { cleanRows } from './cleanRows';
+import { ColumnTypes } from './shared/columnTypes.d';
+import { guessColumnsDataTypes } from './fetchSheet/columnsDataTypes';
+import { cleanRows } from './fetchSheet/cleanRows';
 
 export const seedConstant = '2972963f-2fcf-4567-9237-c09a2b436541';
 

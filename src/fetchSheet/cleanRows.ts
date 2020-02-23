@@ -1,7 +1,7 @@
 import { SpreadsheetRow } from 'google-spreadsheet';
-import { camelCase } from './camelCase';
-import { ColumnTypes } from './columnTypes.d';
-import { filter } from './filter';
+import { camelCase } from './shared/camelCase';
+import { ColumnTypes } from '../shared/columnTypes.d';
+import { filter } from './shared/filter';
 
 export const cleanRows = (
   columnTypes: ColumnTypes,
