@@ -31,24 +31,24 @@
   },
   "dependencies": {
     "google-spreadsheet": "^3.0.11",
-    "uuid": "^3.3.3"
+    "uuid": "^7.0.3"
   },
   "devDependencies": {
-    "@types/jest": "^24.0.24",
-    "@types/lodash": "^4.14.149",
+    "@types/jest": "^25.2.1",
     "@types/node": "^12.12.21",
-    "@types/uuid": "^3.4.6",
-    "cross-env": "^6.0.3",
-    "jest": "^24.9.0",
-    "prettier": "^1.19.1",
-    "ts-jest": "^24.2.0",
-    "typescript": "^3.7.4"
+    "@types/uuid": "^7.0.3",
+    "cross-env": "^7.0.2",
+    "jest": "^25.4.0",
+    "prettier": "^2.0.5",
+    "ts-jest": "^25.4.0",
+    "typescript": "^3.8.3"
   },
   "prettier": {
     "printWidth": 80,
     "singleQuote": true,
     "trailingComma": "all",
     "proseWrap": "always",
-    "tabWidth": 2
+    "tabWidth": 2,
+    "arrowParens": "avoid"
   }
 }
