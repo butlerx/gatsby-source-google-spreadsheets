@@ -1,5 +1,5 @@
 import { GoogleSpreadsheetRow } from 'google-spreadsheet';
-import { ColumnTypes } from '../../shared/columnTypes.d';
+import { ColumnTypes } from '../../columnTypes.d';
 import { camelCase } from '../shared/camelCase';
 import { filter } from '../shared/filter';
 
