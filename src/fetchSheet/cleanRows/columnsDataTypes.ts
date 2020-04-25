@@ -6,7 +6,7 @@ import { filter } from '../shared/filter';
 const checkType = (val: any): string => {
   // try to determine type based on the cell value
   if (!val || val === '') return 'null';
-  // sheets apparently leaves commas in some #s depending on formatting
+  // sheets apparently leaves commas in some numbers depending on formatting
   if (val.replace(/[,\.\d]/g, '').length === 0 && val !== '') return 'number';
   if (val === 'TRUE' || val === 'FALSE') return 'boolean';
   return 'string';

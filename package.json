@@ -5,8 +5,8 @@
   "main": "index.js",
   "scripts": {
     "build": "tsc --build tsconfig.json",
-    "prepublish": "prettier ./src/** --write && jest && cross-env NODE_ENV=production tsc --build tsconfig.json",
-    "format": "prettier ./src/** --write",
+    "prepublish": "yarn format && yarn test && cross-env NODE_ENV=production yarn build",
+    "format": "prettier ./src/** --write && destiny ",
     "test": "jest"
   },
   "author": "Cian Butler <butlerx@notthe.cloud>",
@@ -38,6 +38,7 @@
     "@types/node": "^12.12.21",
     "@types/uuid": "^7.0.3",
     "cross-env": "^7.0.2",
+    "destiny": "^0.6.1",
     "jest": "^25.4.0",
     "prettier": "^2.0.5",
     "ts-jest": "^25.4.0",
@@ -50,5 +51,12 @@
     "proseWrap": "always",
     "tabWidth": 2,
     "arrowParens": "avoid"
+  },
+  "destiny": {
+    "include": [
+      "src"
+    ],
+    "write": true,
+    "avoidSingleFile": true
   }
 }
