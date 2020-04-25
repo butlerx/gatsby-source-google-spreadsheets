@@ -1,5 +1,5 @@
 import { cleanRows } from './cleanRows';
-import { guessColumnsDataTypes } from './columnsDataTypes';
+import { guessColumnsDataTypes } from './cleanRows/columnsDataTypes';
 
 describe('cleaning rows from GSheets response', () => {
   it("removes keys that don't correspond to column names", () => {
@@ -11,8 +11,7 @@ describe('cleaning rows from GSheets response', () => {
       }),
       { validKey: 'true' },
     );
-    const columnTypes = guessColumnsDataTypes([row]);
-    const cleaned = cleanRows(columnTypes, [row])[0];
+    const cleaned = cleanRows([row])[0];
     expect(Object.keys(cleaned)).toHaveLength(1);
 
     expect(Object.keys(cleaned)[0]).toBe('validKey');
@@ -21,8 +20,7 @@ describe('cleaning rows from GSheets response', () => {
 
   it('converts "TRUE" and "FALSE" into actual booleans', () => {
     const row = { truthy: 'TRUE', falsy: 'FALSE' };
-    const columnTypes = guessColumnsDataTypes([row]);
-    const cleaned = cleanRows(columnTypes, [row])[0];
+    const cleaned = cleanRows([row])[0];
     expect(Object.keys(cleaned)).toEqual(['truthy', 'falsy']);
     expect(cleaned.truthy).toBe(true);
     expect(cleaned.falsy).toBe(false);
@@ -30,8 +28,7 @@ describe('cleaning rows from GSheets response', () => {
 
   it('converts empty cells into actual null', () => {
     const row = { empty: '', nulled: null };
-    const columnTypes = guessColumnsDataTypes([row]);
-    const cleaned = cleanRows(columnTypes, [row])[0];
+    const cleaned = cleanRows([row])[0];
     expect(cleaned.empty).toBe(null);
     expect(cleaned.nulled).toBe(null);
   });
@@ -39,8 +36,7 @@ describe('cleaning rows from GSheets response', () => {
   it('respects emoji', () => {
     const TEST_EMOJI_STRING = '🔑🔑🔑🔑🔑🔑🔑🔑🔑🔑🔑🔑🔑';
     const row = { emoji: TEST_EMOJI_STRING };
-    const columnTypes = guessColumnsDataTypes([row]);
-    const cleaned = cleanRows(columnTypes, [row])[0];
+    const cleaned = cleanRows([row])[0];
     expect(cleaned.emoji).toEqual(TEST_EMOJI_STRING);
   });
 
@@ -51,23 +47,20 @@ describe('cleaning rows from GSheets response', () => {
       decimal: '0.5912',
       mixed: '123,456.789',
     };
-    const columnTypes = guessColumnsDataTypes([row]);
-    const cleaned = cleanRows(columnTypes, [row])[0];
+    const cleaned = cleanRows([row])[0];
     expect(Object.values(cleaned)).toEqual([1, 123456789, 0.5912, 123456.789]);
   });
 
   it('parses cells as numbers when all column cells contains numbers only', () => {
     const rows = [{ column: '5' }, { column: '2' }];
-    const columnTypes = guessColumnsDataTypes(rows);
-    const cleaned = cleanRows(columnTypes, rows);
+    const cleaned = cleanRows(rows);
     expect(cleaned[0].column).toBe(5);
     expect(cleaned[1].column).toBe(2);
   });
 
   it('parses all cells in column as strings when data types are mixed in given column', () => {
     const rows = [{ column: '5' }, { column: 'hello' }];
-    const columnTypes = guessColumnsDataTypes(rows);
-    const cleaned = cleanRows(columnTypes, rows);
+    const cleaned = cleanRows(rows);
     expect(cleaned[0].column).toBe('5');
     expect(cleaned[1].column).toBe('hello');
   });
@@ -93,8 +86,7 @@ describe('cleaning rows from GSheets response', () => {
         boolean: null,
       },
     ];
-    const columnTypes = guessColumnsDataTypes(rows);
-    const cleaned = cleanRows(columnTypes, rows);
+    const cleaned = cleanRows(rows);
     expect(cleaned.map(row => row.number)).toEqual([0, 1, 2]);
     expect(cleaned.map(row => row.string)).toEqual([
       'something',

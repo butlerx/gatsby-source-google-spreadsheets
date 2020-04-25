@@ -1,13 +1,12 @@
 import { SpreadsheetRow } from 'google-spreadsheet';
-import { camelCase } from './shared/camelCase';
 import { ColumnTypes } from '../shared/columnTypes.d';
+import { camelCase } from './shared/camelCase';
 import { filter } from './shared/filter';
+import { guessColumnsDataTypes } from './cleanRows/columnsDataTypes';
 
-export const cleanRows = (
-  columnTypes: ColumnTypes,
-  rows: SpreadsheetRow[],
-): SpreadsheetRow[] =>
-  rows.map(row =>
+export const cleanRows = (rows: SpreadsheetRow[]): SpreadsheetRow[] => {
+  const columnTypes = guessColumnsDataTypes(rows);
+  return rows.map(row =>
     Object.entries(row)
       .filter(([columnName]) => !filter.includes(columnName))
       .map(obj => ({
@@ -15,6 +14,7 @@ export const cleanRows = (
       }))
       .reduce((row, cell) => Object.assign(row, cell), {}),
   );
+};
 
 function convertCell(columnTypes: ColumnTypes, key: string, val: any): any {
   switch (columnTypes[key]) {
