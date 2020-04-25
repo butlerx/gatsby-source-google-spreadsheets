@@ -26,18 +26,48 @@ yarn add gatsby-source-google-spreadsheets
 
 ## Usage
 
-### Step 1: set up sheets/permissions
+### Step 1: Set up your google project & enable the sheets API
 
-1. Create a
-   [Google Service Account](https://developers.google.com/identity/protocols/OAuth2ServiceAccount#creatinganaccount)
-   and download the credentials file.
+1. Go to the [Google Developers Console](https://console.developers.google.com/)
+1. Select your project or create a new one (and then select it)
+1. Enable the Sheets API for your project
+   - In the sidebar on the left, select **APIs & Services > Library**
+   - Search for "sheets"
+   - Click on "Google Sheets API"
+   - click the blue "Enable" button
+
+### Step 2: set up sheets/permissions
+
+Next you need to decide if you wish to authenticate with a service account or an
+API key.
+
+1. Create a service account for your project
+   - In the sidebar on the left, select **APIs & Services > Credentials**
+   - Click blue "+ CREATE CREDENITALS" and select "Service account" option
+   - Enter name, description, click "CREATE"
+   - You can skip permissions, click "CONTINUE"
+   - Click "+ CREATE KEY" button
+   - Select the "JSON" key type option
+   - Click "Create" button
+   - your JSON key file is generated and downloaded to your machine (**it is the
+     only copy!**)
+   - click "DONE"
+   - note your service account's email address (also available in the JSON key
+     file)
 1. Open your google sheet, click "File > Share..." and enter your service
    account's e-mail address (you can find it in the credentials file).
 
-Or If you wish to work with a Google Spreadsheet without authenticating, not
-only must the Spreadsheet in question be visible to the web, but it must also
-have been explicitly published.
+Or if you wish to use an API Key not only must the Spreadsheet in question be
+visible to the web, but it must also have been explicitly published.
 
+1. Create an API key for your project
+   - In the sidebar on the left, select **Credentials**
+   - Click blue "+ CREATE CREDENITALS" and select "API key" option
+   - Copy the API key
+1. OPTIONAL - click "Restrict key" on popup to set up restrictions
+   - Click "API restrictions" > Restrict Key"
+   - Check the "Google Sheets API" checkbox
+   - Click "Save"
 1. Open your google sheet, Click "File > Publish to the web" and Share entire
    sheet or specific worksheets.
 1. Click "File > Share" and click "Get Shareable Link", the link should look
@@ -55,7 +85,8 @@ Standard source plugin installation.
   resolve: 'gatsby-source-google-spreadsheets',
   options: {
     spreadsheetId: 'get this from the sheet url',
-    // This is only needed if you are not using published sheets
+    apiKey: 'GOOGLE-API-KEY'
+    // Or
     credentials: require('./path-to-credentials-file.json')
   }
 },
@@ -64,9 +95,10 @@ Standard source plugin installation.
   resolve: 'gatsby-source-google-spreadsheets',
   options: {
     spreadsheetId: 'get this from the sheet url',
-    // This is only needed if you are not using published sheets
     credentials: {
       spreadsheetId: process.env.SPREADSHEET_ID,
+      apiKey: process.env.GOOGLE_API_KEY,
+      // OR
       credentials: {
         type: 'service_account',
         project_id: process.env.PROJECT_ID,

@@ -1,4 +1,4 @@
-import { SpreadsheetRow } from 'google-spreadsheet';
+import { GoogleSpreadsheetRow } from 'google-spreadsheet';
 import { ColumnTypes } from '../shared/columnTypes.d';
 import { camelCase } from './shared/camelCase';
 import { filter } from './shared/filter';
@@ -12,7 +12,7 @@ const checkType = (val: any): string => {
   return 'string';
 };
 
-const rowTypes = (row: SpreadsheetRow): ColumnTypes =>
+const rowTypes = (row: GoogleSpreadsheetRow): ColumnTypes =>
   Object.entries(row)
     .filter(([columnName]) => !filter.includes(columnName))
     .map(obj => ({ [camelCase(obj[0])]: checkType(obj[1]) }))
@@ -37,5 +37,6 @@ function flattenRowTypes(
   return columnTypes;
 }
 
-export const guessColumnsDataTypes = (rows: SpreadsheetRow[]): ColumnTypes =>
-  rows.map(rowTypes).reduce(flattenRowTypes, {});
+export const guessColumnsDataTypes = (
+  rows: GoogleSpreadsheetRow[],
+): ColumnTypes => rows.map(rowTypes).reduce(flattenRowTypes, {});
