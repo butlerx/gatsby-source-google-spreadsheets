@@ -1,12 +1,17 @@
 import fetchSheet from './fetchSheet';
 
+const { GOOGLE_API_KEY } = process.env;
+const withAuth = GOOGLE_API_KEY ? it : it.skip;
+if (withAuth == it.skip) {
+  console.warn('GOOGLE_API_KEY is undefined, skipping authed tests');
+}
+
 describe('fetching remote sheet from google', () => {
-  it('public sheets require API credential', async () => {
-    const apiKey = process.env.GOOGLE_API_KEY;
+  withAuth('public sheets require API credential', async () => {
     const sheet = await fetchSheet(
       '1UPOEWfYO_BpK_upTzsUyzsjO-buodyIYSuVvFhb_xc4',
       undefined,
-      apiKey,
+      GOOGLE_API_KEY,
     );
     expect(sheet).toBeDefined();
     expect(sheet.id).toBeDefined();
