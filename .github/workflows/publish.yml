@@ -1,10 +1,11 @@
 ---
 name: Publish
 on:
-  release:
-    types: [published]
+  push:
+    branches:
+      - master
 jobs:
-  build:
+  publish:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v1
@@ -13,7 +14,16 @@ jobs:
           node-version: 12
           registry-url: https://registry.npmjs.org/
       - run: yarn
-      - run: yarn publish --access public
+      - run: yarn build
+      - run: yarn test
         env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
           GOOGLE_API_KEY: ${{ secrets.GOOGLE_API_KEY }}
+      - name: Publish if version has been updated
+        uses: pascalgn/npm-publish-action@v1.2.0
+        with:
+          tag_name: "v%s"
+          tag_message: "v%s"
+          commit_pattern: "^Release (\\S+)"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NPM_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
