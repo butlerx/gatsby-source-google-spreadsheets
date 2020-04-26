@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "build": "tsc --build tsconfig.json",
-    "prepublish": "yarn format && yarn test && cross-env NODE_ENV=production yarn build",
+    "prepack": "yarn format && yarn test && cross-env NODE_ENV=production yarn build",
     "format": "prettier ./src/** --write && destiny ",
     "test": "jest"
   },
