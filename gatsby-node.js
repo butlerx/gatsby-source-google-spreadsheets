@@ -11,6 +11,7 @@ exports.sourceNodes = async (
   Object.entries(sheets).forEach(([name, data]) => {
     if (Array.isArray(data)) {
       data.forEach(row =>
+        name = name.replace(/[\W_]+/g, '');
         createNode(
           Object.assign(row, {
             parent: '__SOURCE__',
