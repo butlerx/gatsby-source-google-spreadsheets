@@ -19,7 +19,7 @@ jobs:
         env:
           GOOGLE_API_KEY: ${{ secrets.GOOGLE_API_KEY }}
       - name: Publish if version has been updated
-        uses: pascalgn/npm-publish-action@v1.2.0
+        uses: pascalgn/npm-publish-action@1.2.0
         with:
           tag_name: "v%s"
           tag_message: "v%s"
