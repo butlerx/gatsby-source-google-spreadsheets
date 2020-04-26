@@ -1,9 +1,6 @@
 ---
-name: Node.js CI
+name: Test PR
 on:
-  push:
-    branches:
-      - master
   pull_request:
     branches:
       - master
