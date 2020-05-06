@@ -21,4 +21,9 @@ jobs:
       - run: yarn test
         env:
           CI: true
+          CLIENT_EMAIL: ${{ secret.CLIENT_EMAIL }}
           GOOGLE_API_KEY: ${{ secrets.GOOGLE_API_KEY }}
+          PRIVATE_KEY: ${{ secret.PRIVATE_KEY }}
+          PRIVATE_KEY_ID: ${{ secret.PRIVATE_KEY_ID }}
+          PROJECT_ID: ${{ secret.PROJECT_ID }}
+          SPREADSHEET_ID: "1UPOEWfYO_BpK_upTzsUyzsjO-buodyIYSuVvFhb_xc4"
