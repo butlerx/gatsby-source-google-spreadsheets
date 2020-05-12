@@ -21,6 +21,7 @@ jobs:
       - run: yarn test
         env:
           CI: true
+          CLIENT_ID: ${{ secret.CLIENT_ID }}
           CLIENT_EMAIL: ${{ secret.CLIENT_EMAIL }}
           GOOGLE_API_KEY: ${{ secrets.GOOGLE_API_KEY }}
           PRIVATE_KEY: ${{ secret.PRIVATE_KEY }}
