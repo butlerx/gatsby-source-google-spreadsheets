@@ -1,6 +1,23 @@
 import { cleanRows } from './cleanRows';
 import { guessColumnsDataTypes } from './cleanRows/columnsDataTypes';
 
+declare global {
+  namespace jest {
+    interface Matchers<R> {
+      toBeBoolean(): R;
+    }
+  }
+}
+
+expect.extend({
+  toBeBoolean(received) {
+    return {
+      message: () => `expected ${received} to be boolean or null`,
+      pass: typeof received === 'boolean',
+    };
+  },
+});
+
 describe('cleaning rows from GSheets response', () => {
   it("removes keys that don't correspond to column names", () => {
     const badKeys = ['_xml', 'app:edited', 'save', 'del', '_links'];
@@ -22,6 +39,8 @@ describe('cleaning rows from GSheets response', () => {
     const row = { truthy: 'TRUE', falsy: 'FALSE' };
     const cleaned = cleanRows([row])[0];
     expect(Object.keys(cleaned)).toEqual(['truthy', 'falsy']);
+    expect(cleaned.truthy).toBeBoolean();
+    expect(cleaned.falsy).toBeBoolean();
     expect(cleaned.truthy).toBe(true);
     expect(cleaned.falsy).toBe(false);
   });
@@ -71,19 +90,19 @@ describe('cleaning rows from GSheets response', () => {
         number: '0',
         string: 'something',
         null: null,
-        boolean: 'TRUE',
+        'boolean-value': 'TRUE',
       },
       {
         number: '1',
         string: 'anything',
         null: null,
-        boolean: 'FALSE',
+        'boolean-value': 'FALSE',
       },
       {
         number: '2',
         string: 'nothing',
         null: null,
-        boolean: null,
+        'boolean-value': null,
       },
     ];
     const cleaned = cleanRows(rows);
@@ -94,6 +113,6 @@ describe('cleaning rows from GSheets response', () => {
       'nothing',
     ]);
     expect(cleaned.map(row => row.null)).toEqual([null, null, null]);
-    expect(cleaned.map(row => row.boolean)).toEqual([true, false, false]);
+    expect(cleaned.map(row => row.booleanValue)).toEqual([true, false, false]);
   });
 });

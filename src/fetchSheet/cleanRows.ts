@@ -9,9 +9,12 @@ export const cleanRows = (rows: SpreadsheetRow[]): SpreadsheetRow[] => {
   return rows.map(row =>
     Object.entries(row)
       .filter(([columnName]) => !filter.includes(columnName))
-      .map(obj => ({
-        [camelCase(obj[0])]: convertCell(columnTypes, obj[0], obj[1]),
-      }))
+      .map(obj => {
+        const key = camelCase(obj[0]);
+        return {
+          [key]: convertCell(columnTypes, key, obj[1]),
+        };
+      })
       .reduce((row, cell) => Object.assign(row, cell), {}),
   );
 };
