@@ -146,10 +146,19 @@ A few notes:
 
 ## Troubleshooting
 
-3. If you get the error "No key or keyFile set", make sure you are using a
+1. If you get the error "No key or keyFile set", make sure you are using a
    Service Account API key and not a simple API key.
-4. If you get the error "Cannot read property 'worksheets' of undefined", make
+2. If you get the error "Cannot read property 'worksheets' of undefined", make
    sure you have shared your spreadsheet with your service account user.
+
+## Release Process
+
+To Release a new version of the plugin
+
+1. Bump the version in the `package.json` to the new version
+2. Create a commit message with the pattern `Release 1.2.3` where `1.2.3` is the
+   new version.
+3. push to master
 
 ## Author
 
