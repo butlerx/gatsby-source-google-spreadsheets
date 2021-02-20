@@ -22,11 +22,16 @@ export const cleanRows = (rows: SpreadsheetRow[]): SpreadsheetRow[] => {
 function convertCell(columnTypes: ColumnTypes, key: string, val: any): any {
   switch (columnTypes[key]) {
     case 'number':
-      return Number(val.replace(/,/g, ''));
+      return isNull(val) ? null : Number(val.replace(/,/g, ''));
     case 'boolean':
       // when column contains null we return false, otherwise check boolean value
-      return val === null ? false : val === 'TRUE';
+      return isNull(val) ? false : val === 'TRUE';
     default:
-      return val === '' ? null : val;
+      // We cast all possible null types to actually be null
+      return isNull(val) ? null : val;
   }
+}
+
+function isNull(val: any): boolean {
+  return val === null || val === undefined || val === '';
 }

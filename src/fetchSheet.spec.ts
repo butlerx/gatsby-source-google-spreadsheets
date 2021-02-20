@@ -24,6 +24,23 @@ if (withPrivateKey == it.skip) {
   );
 }
 
+declare global {
+  namespace jest {
+    interface Matchers<R> {
+      toBeBoolean(): R;
+    }
+  }
+}
+
+expect.extend({
+  toBeBoolean(received) {
+    return {
+      message: () => `expected ${received} to be boolean or null`,
+      pass: typeof received === 'boolean',
+    };
+  },
+});
+
 describe('fetching remote sheet from google', () => {
   withAPIKey('public sheets require API credential', async () => {
     const sheet = await fetchSheet(SPREADSHEET_ID, undefined, GOOGLE_API_KEY);
@@ -55,5 +72,15 @@ describe('fetching remote sheet from google', () => {
     expect(sheet).toBeDefined();
     expect(sheet.id).toBeDefined();
     expect(sheet.inventory).toBeDefined();
+  });
+
+  withAPIKey('undefineds on sheets to be correct', async () => {
+    const sheet = await fetchSheet(
+      '1QfQ-DvRe1O-w2t87AIA_XcQFgMEwylrVVeBetZW9plI',
+      undefined,
+      GOOGLE_API_KEY,
+    );
+    expect(sheet).toBeDefined();
+    expect(sheet.id).toBeDefined();
   });
 });

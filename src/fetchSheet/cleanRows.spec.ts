@@ -100,19 +100,45 @@ describe('cleaning rows from GSheets response', () => {
       },
       {
         number: '2',
-        string: 'nothing',
+        string: '',
         null: null,
         'boolean-value': null,
       },
+      {
+        number: null,
+        string: null,
+        null: null,
+        'boolean-value': null,
+      },
+      {
+        number: undefined,
+        string: undefined,
+        null: undefined,
+        'boolean-value': undefined,
+      },
     ];
     const cleaned = cleanRows(rows);
-    expect(cleaned.map(row => row.number)).toEqual([0, 1, 2]);
+    expect(cleaned.map(row => row.number)).toEqual([0, 1, 2, null, null]);
     expect(cleaned.map(row => row.string)).toEqual([
       'something',
       'anything',
-      'nothing',
+      null,
+      null,
+      null,
     ]);
-    expect(cleaned.map(row => row.null)).toEqual([null, null, null]);
-    expect(cleaned.map(row => row.booleanValue)).toEqual([true, false, false]);
+    expect(cleaned.map(row => row.null)).toEqual([
+      null,
+      null,
+      null,
+      null,
+      null,
+    ]);
+    expect(cleaned.map(row => row.booleanValue)).toEqual([
+      true,
+      false,
+      false,
+      false,
+      false,
+    ]);
   });
 });
