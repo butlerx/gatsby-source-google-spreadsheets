@@ -150,6 +150,7 @@ A few notes:
    Service Account API key and not a simple API key.
 2. If you get the error "Cannot read property 'worksheets' of undefined", make
    sure you have shared your spreadsheet with your service account user.
+3. If you encounter issues while fetching Spreadsheet data despite your data looks correct, ensure you don't have hidden Sheets in your document which can cause erros.
 
 ## Release Process
 
