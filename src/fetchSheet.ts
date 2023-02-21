@@ -21,7 +21,7 @@ export default async (
         return {
           [worksheet.title]: cleanRows(rows).map((row, id) =>
             Object.assign(row, {
-              id: hash(`${worksheet.sheetId}-${id}`),
+              id: hash(`${spreadsheetId}-${worksheet.sheetId}-${id}`),
             }),
           ),
         };
