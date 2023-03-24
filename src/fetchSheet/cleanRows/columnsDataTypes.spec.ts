@@ -16,7 +16,7 @@ describe('guessing column data type based on all cells in column', () => {
         booleans: 'FALSE',
       },
       {
-        numbers: '3,',
+        numbers: '-3,',
         strings: 'nothing',
         nulls: null,
         booleans: 'TRUE',
