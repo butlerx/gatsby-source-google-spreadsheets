@@ -84,4 +84,14 @@ describe('guessing column data type based on all cells in column', () => {
     expect(guessedTypes.nulls).toBeUndefined();
     expect(guessedTypes.booleans).toBe('boolean');
   });
+
+  it('phone numbers become string', () => {
+    const rows = [
+      {
+        phone: '0177-60606060',
+      },
+    ];
+    const guessedTypes = guessColumnsDataTypes(rows);
+    expect(guessedTypes.phone).toBe('string');
+  });
 });
